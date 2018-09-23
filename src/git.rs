@@ -1,0 +1,78 @@
+use git2::{Repository};
+use std::process::Command;
+use CONFIG;
+
+pub fn fetch() {
+	let repo = Repository::open(&CONFIG.repoloc).unwrap();
+	let mut remote = repo.find_remote("upstream").unwrap();
+	remote.fetch(&["refs/heads/*:refs/heads/*"], None, None).unwrap();
+}
+
+pub fn cherry_pick(sha: &String) {
+	Command::new("git")
+		.current_dir(&CONFIG.repoloc)
+		.arg("cherry-pick")
+		.arg(sha)
+		.output()
+		.expect(&format!("Failed to cherry-pick commit {}", sha));
+	Command::new("git")
+		.current_dir(&CONFIG.repoloc)
+		.arg("add")
+		.arg("-A")
+		.output()
+		.expect(&format!("Failed to add all on commit {}", sha));
+	Command::new("git")
+		.current_dir(&CONFIG.repoloc)
+		.arg("cherry-pick")
+		.arg("--continue")
+		.output()
+		.expect(&format!("Failed to continue cherry-pick on commit {}", sha));
+}
+
+pub fn new_branch(name: &String) {
+	Command::new("git")
+		.current_dir(&CONFIG.repoloc)
+		.arg("checkout")
+		.arg("-b")
+		.arg(name)
+		.output()
+		.expect(&format!("Failed to make new branch '{}'", name));
+}
+
+pub fn branch(name: &String) {
+	fetch();
+	Command::new("git")
+		.current_dir(&CONFIG.repoloc)
+		.arg("checkout")
+		.arg(name)
+		.output()
+		.expect(&format!("Failed to make new branch '{}'", name));
+	Command::new("git")
+		.current_dir(&CONFIG.repoloc)
+		.arg("reset")
+		.arg("--hard")
+		.arg(format!("origin/{}", &CONFIG.mainbranch))
+		.output()
+		.expect(&format!("Failed to reset branch '{}'", name));
+}
+
+pub fn push_upstream(name: &String) {
+	Command::new("git")
+		.current_dir(&CONFIG.repoloc)
+		.arg("push")
+		.arg("-u")
+		.arg("origin")
+		.arg(name)
+		.output()
+		.expect(&format!("Failed to push branch '{}'", name));
+}
+
+pub fn prune() {
+	Command::new("git")
+		.current_dir(&CONFIG.repoloc)
+		.arg("remote")
+		.arg("prune")
+		.arg("origin")
+		.output()
+		.expect(&"Failed to prune origin!");
+}

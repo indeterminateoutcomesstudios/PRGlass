@@ -1,0 +1,5 @@
+baserepo = "tgstation/tgstation"
+targetrepo = "SunsetStation/SunsetStation"
+githubtoken = "INSERT TOKEN HERE"
+repoloc = "D:/Code/Rust/SunsetStation"
+mainbranch = "master"
