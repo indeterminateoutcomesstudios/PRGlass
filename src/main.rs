@@ -12,6 +12,7 @@ extern crate lazy_static;
 mod git;
 mod scrape;
 mod settings;
+mod db;
 
 use settings::Settings;
 
