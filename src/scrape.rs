@@ -39,12 +39,12 @@ pub fn scrape_for_events() {
                                 git::push_upstream(&branch_name);
                                 let post_url = format!("repos/{}/pulls", CONFIG.targetrepo);
                                 let post_data = json!({
-                                "title": format!("[MIRROR] {}", val["payload"]["pull_request"]["title"].as_str().unwrap()),
-                                "head": branch_name,
-                                "base": CONFIG.mainbranch,
-                                "body": format!("Original PR: {}\r\n--------------------\r\n{}", val["payload"]["pull_request"]["html_url"].as_str().unwrap(), val["payload"]["pull_request"]["body"].as_str().unwrap()),
-                                "maintainer_can_modify": true
-                            });
+                                    "title": format!("[MIRROR] {}", val["payload"]["pull_request"]["title"].as_str().unwrap()),
+                                    "head": branch_name,
+                                    "base": CONFIG.mainbranch,
+                                    "body": format!("Original PR: {}\r\n--------------------\r\n{}", val["payload"]["pull_request"]["html_url"].as_str().unwrap(), val["payload"]["pull_request"]["body"].as_str().unwrap()),
+                                    "maintainer_can_modify": true
+                                });
                                 let resp = client
                                     .post(post_data)
                                     .custom_endpoint(&post_url)
