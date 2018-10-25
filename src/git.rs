@@ -19,7 +19,7 @@ pub fn cherry_pick(sha: &String) {
 		.arg(sha)
 		.output()
 		.expect(&format!("Failed to cherry-pick commit {}", sha));
-	if String::from_utf8_lossy(&cherry_bomb.stdout).contains("commit is a merge commit") { // this does exactly what you think it does
+	if String::from_utf8_lossy(&cherry_bomb.stderr).contains("is a merge but no -m option") { // this does exactly what you think it does
 		Command::new("git")
 			.current_dir(&CONFIG.repoloc)
 			.arg("cherry-pick")
@@ -28,7 +28,7 @@ pub fn cherry_pick(sha: &String) {
 			.arg("-m 1")
 			.arg(sha)
 			.output()
-			.expect(&format!("Failed to cherry-pick commit {}", sha));
+			.expect(&format!("Failed to cherry-pick merge commit {}", sha));
 	}
 	Command::new("git")
 		.current_dir(&CONFIG.repoloc)
