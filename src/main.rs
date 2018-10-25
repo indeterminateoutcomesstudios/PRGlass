@@ -31,4 +31,5 @@ fn print_config() {
     println!("Base repo: {}", CONFIG.baserepo);
     println!("Target repo: {}", CONFIG.targetrepo);
     println!("Repo path: {}", CONFIG.repoloc);
+    println!("WARNING: An SSH agent (or stored git credentials) needs to be active in order to actually push!");
 }

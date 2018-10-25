@@ -1,5 +1,6 @@
 baserepo = "tgstation/tgstation"
 targetrepo = "SunsetStation/SunsetStation"
-githubtoken = "INSERT TOKEN HERE"
+githubtoken = "placeholder token"
 repoloc = "D:/Code/Rust/SunsetStation"
 mainbranch = "master"
+branchprefix = "upstream-merge-"

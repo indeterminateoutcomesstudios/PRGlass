@@ -28,7 +28,7 @@ pub fn scrape_for_events() {
                                     continue;
                                 }
                                 println!("PR {} was merged upstream!", prnum);
-                                let branch_name = format!("upstream-merge-{}", prnum);
+                                let branch_name = format!("{}{}", &CONFIG.branchprefix, prnum);
                                 git::new_branch(&branch_name);
                                 git::cherry_pick(
                                     &val["payload"]["pull_request"]["merge_commit_sha"]

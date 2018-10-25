@@ -8,6 +8,7 @@ pub struct Settings {
     pub githubtoken: String,
     pub repoloc: String,
     pub mainbranch: String,
+    pub branchprefix: String,
 }
 
 impl Settings {
