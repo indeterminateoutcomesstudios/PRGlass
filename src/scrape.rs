@@ -8,7 +8,6 @@ use CONFIG;
 
 pub fn scrape_for_events() {
     git::fetch();
-    git::prune();
     git::branch(&CONFIG.mainbranch.to_string());
     let client = Github::new(&CONFIG.githubtoken).unwrap();
     let event_url = format!("repos/{}/events?per_page=300", &CONFIG.baserepo);

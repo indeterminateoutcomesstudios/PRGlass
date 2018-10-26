@@ -83,13 +83,3 @@ pub fn push_upstream(name: &String) {
 		.output()
 		.expect(&format!("Failed to push branch '{}'", name));
 }
-
-pub fn prune() {
-	Command::new("git")
-		.current_dir(&CONFIG.repoloc)
-		.arg("remote")
-		.arg("prune")
-		.arg("origin")
-		.output()
-		.expect(&"Failed to prune origin!");
-}
